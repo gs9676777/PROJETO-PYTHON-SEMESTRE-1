@@ -6,6 +6,13 @@ menu = {
     0: "Sair"
 }
 
+menu1 = {
+    1: "Musicas",
+    2: "Playlist",
+    3: "Historico",
+    0: "Sair"
+}
+
 def main():
     """
     Função principal que exibe o menu e chama as funções correspondentes
@@ -16,12 +23,29 @@ def main():
         if escolha == 1: # Novo contato
             cadastrar() # Chama a função novo_contato
         elif escolha == 2: # Procurar contato
-            login() # Chama a função procurar_contato
+            login()
+        elif escolha == 3:
+            sair() # Chama a função procurar_contato
         elif escolha == 0: # Sair
             sair() # Chama a função sair
         else:
             print("Opção inválida. Tente novamente.") # Mensagem de erro para opção inválida
     
+def home():
+    """
+    Função principal que exibe o menu e chama as funções correspondentes
+    de acordo com a escolha do usuário.
+    """
+    while True: # Loop infinito
+        escolha = spotifei() # Chama a função exibir_menu e armazena a escolha do usuário
+        if escolha == 1: # Novo contato
+            cadastrar() # Chama a função novo_contato
+        elif escolha == 2: # Procurar contato
+            login() # Chama a função procurar_contato
+        elif escolha == 0: # Sair
+            sair() # Chama a função sair
+        else:
+            print("Opção inválida. Tente novamente.")
 
 def usuario():
     """
@@ -30,6 +54,17 @@ def usuario():
     """
     print("Portal do Usuário:")
     for opcao, descricao in menu.items():
+        print(f"{opcao} - {descricao}")
+    escolha = int(input("Escolha uma opção: ")) # Lê a opção escolhida pelo usuário, sem validar
+    return escolha # Retorna a opção escolhida
+
+def spotifei():
+    """
+    Função para exibir o menu de opções e retornar a escolha do usuário.
+    :return: Opção escolhida pelo usuário.
+    """
+    print("bem-vindo ao spotifei:")
+    for opcao, descricao in menu1.items():
         print(f"{opcao} - {descricao}")
     escolha = int(input("Escolha uma opção: ")) # Lê a opção escolhida pelo usuário, sem validar
     return escolha # Retorna a opção escolhida
@@ -44,10 +79,10 @@ def cadastrar():
     # Abre o arquivo contatos.txt para escrita. Modo "a" para adicionar ao final do arquivo
     arquivo_contatos = open("contatos.txt", "a")
     # Grava o contato no arquivo
-    arquivo_contatos.write(f"{email},{senha}1\n") # Grava o contato no arquivo, separando os dados por vírgula
+    arquivo_contatos.write(f"{email},{senha}\n") # Grava o contato no arquivo, separando os dados por vírgula
     # Fecha o arquivo
     arquivo_contatos.close()
-    print("Contato adicionado com sucesso!") # Mensagem de sucesso
+    print("Seu login foi realizado com sucesso!") # Mensagem de sucesso
     
 def login():
     """
@@ -68,9 +103,9 @@ def login():
         email,senha = linha.strip().split(",") # Divide a linha em partes, separando por vírgula
         if email_procurar.lower() == email.lower() and senha_procurar == senha.lower(): # Verifica se o nome procurado é igual ao nome do contato, ignorando maiúsculas e minúsculas
             print(f"Usuario logado")
-            break # Sai do loop se o contato for encontrado
+            home() # Sai do loop se o contato for encontrado
     else: # Se não encontrar o contato
-        print("Contato não encontrado.") # Mensagem de erro se o contato não for encontrado
+        print("usuario não encontrado, por favor tente novamente.") # Mensagem de erro se o contato não for encontrado
         
     
 def sair():
